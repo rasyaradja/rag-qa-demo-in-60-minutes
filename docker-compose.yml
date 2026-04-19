@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: rag-frontend
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:8000
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - ragnet
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rag-backend
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - HF_TOKEN=${HF_TOKEN}
+      - VECTOR_DB=${VECTOR_DB:-faiss}
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - DATABASE_URL=postgresql+asyncpg://rag_user:rag_pass@db:5432/rag_db
+      - EMBEDDINGS_MODEL=${EMBEDDINGS_MODEL:-text-embedding-ada-002}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+      - PROMPT_VERSION=${PROMPT_VERSION:-v1}
+      - EVAL_SET_PATH=${EVAL_SET_PATH:-data/eval_set.json}
+      - SECRET_KEY=${SECRET_KEY}
+      - PORT=8000
+    volumes:
+      - ./backend/data:/app/data:ro
+      - ./backend/reports:/app/reports
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ragnet
+
+  db:
+    image: postgres:15-alpine
+    container_name: rag-db
+    environment:
+      - POSTGRES_USER=rag_user
+      - POSTGRES_PASSWORD=rag_pass
+      - POSTGRES_DB=rag_db
+    volumes:
+      - rag-db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag_user -d rag_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ragnet
+
+volumes:
+  rag-db-data:
+
+networks:
+  ragnet:
+    driver: bridge

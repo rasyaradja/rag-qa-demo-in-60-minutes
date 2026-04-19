@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What is the main purpose of the RAG Q&A Demo in 60 Minutes project?",
+    "gold_answer": "To demonstrate how to build a Retrieval-Augmented Generation (RAG) Q&A assistant using LLM APIs and vector search, providing a web demo with source citations and reproducible evaluation."
+  },
+  {
+    "question": "Which backend web framework is used in this project?",
+    "gold_answer": "FastAPI is used as the backend web framework."
+  },
+  {
+    "question": "What database is used to store documents and logs?",
+    "gold_answer": "PostgreSQL is used as the primary database."
+  },
+  {
+    "question": "How does the system ensure that answers are supported by sources?",
+    "gold_answer": "By retrieving relevant documents from a vector database and including citations in the generated answers."
+  },
+  {
+    "question": "What is the role of FAISS or Pinecone in this project?",
+    "gold_answer": "They serve as the vector database for fast similarity search over document embeddings."
+  },
+  {
+    "question": "Which technologies are used for the frontend?",
+    "gold_answer": "Next.js 14, TypeScript 5, and Tailwind CSS are used for the frontend."
+  },
+  {
+    "question": "What is Retrieval-Augmented Generation (RAG)?",
+    "gold_answer": "RAG is a technique that combines information retrieval with large language models to answer questions using retrieved context and provide verifiable sources."
+  },
+  {
+    "question": "How does the system handle unsafe or out-of-domain questions?",
+    "gold_answer": "It refuses to answer unsafe or out-of-domain questions and returns a clear refusal message."
+  },
+  {
+    "question": "What metrics are reported in the evaluation pipeline?",
+    "gold_answer": "Faithfulness, relevance, safety flags, latency, and cost metrics are reported."
+  },
+  {
+    "question": "Where are the curated source documents stored?",
+    "gold_answer": "In the backend/data/sources.md file."
+  },
+  {
+    "question": "Can the backend use different LLM providers?",
+    "gold_answer": "Yes, it supports OpenAI, Anthropic, and Hugging Face Llama models."
+  },
+  {
+    "question": "What is prompt engineering in the context of this project?",
+    "gold_answer": "Prompt engineering is designing and refining instructions for LLMs; prompt templates are versioned and can be switched for experimentation."
+  },
+  {
+    "question": "How does the evaluation pipeline measure faithfulness?",
+    "gold_answer": "By checking if the answer aligns with the retrieved source documents."
+  },
+  {
+    "question": "What file contains the evaluation set for reproducible scoring?",
+    "gold_answer": "The backend/data/eval_set.json file."
+  },
+  {
+    "question": "What is the refusal policy of the system?",
+    "gold_answer": "The system refuses to answer questions that are unsafe, out-of-domain, or violate safety policies."
+  },
+  {
+    "question": "How are citations presented to the user?",
+    "gold_answer": "As a list of supporting documents, including title, optional source URL, and a snippet preview."
+  },
+  {
+    "question": "What is the intended use of this demo?",
+    "gold_answer": "For educational and prototyping purposes, not for production or sensitive applications."
+  },
+  {
+    "question": "How does the system prevent data leakage between evaluation and retrieval?",
+    "gold_answer": "By keeping evaluation sets separate from the retrieval corpus and using only curated, documented sources."
+  },
+  {
+    "question": "What is the main benefit of using Docker Compose in this project?",
+    "gold_answer": "It simplifies local setup and ensures reproducibility across environments."
+  },
+  {
+    "question": "What should a user do if they receive a refusal message?",
+    "gold_answer": "Understand that the question was considered unsafe or out-of-scope and try rephrasing or asking a project-related question."
+  }
+]
